@@ -32,8 +32,8 @@ public class PerformanceMonitoringServiceImpl implements PerformanceMonitoringSe
     public PerformanceMonitoringServiceImpl(RestTemplateBuilder restTemplateBuilder) {
         this.meterRegistry = new SimpleMeterRegistry();
         MemoryMXBean memoryBean = ManagementFactory.getMemoryMXBean();
-        this.restTemplateForDataGeneratingService = restTemplateBuilder.rootUri("http://localhost:8080/data-generation").build();
-        this.restTemplateForDataProcessingService = restTemplateBuilder.rootUri("http://localhost:8081/data-processing").build();
+        this.restTemplateForDataGeneratingService = restTemplateBuilder.rootUri("http://data-generation:8080/data-generation").build();
+        this.restTemplateForDataProcessingService = restTemplateBuilder.rootUri("http://data-processing:8081/data-processing").build();
         this.usedMemoryByTime = new LinkedHashMap<>();
         // Ustawienie metryki dla pamięci
         Gauge.builder("jvm.memory.used", memoryBean, bean -> bean.getHeapMemoryUsage().getUsed())

@@ -17,7 +17,7 @@ public class DataProcessingServiceImpl implements DataProcessingService {
 
 
     public DataProcessingServiceImpl(RestTemplateBuilder restTemplateBuilder) {
-        restTemplate = restTemplateBuilder.rootUri("http://localhost:8080/data-generation").build();
+        restTemplate = restTemplateBuilder.rootUri("http://data-generation:8080/data-generation").build();
     }
 
     @Override
