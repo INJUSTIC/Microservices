@@ -3,7 +3,10 @@ import com.example.dataprocessingservice.service.DataProcessingService;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Arrays;
 import java.util.List;
+import java.util.regex.Pattern;
 
 @RestController
 public class DataProcessingController {
@@ -26,7 +29,8 @@ public class DataProcessingController {
     @GetMapping("/data/customCsv/{size}")
     public String convertToCSVWithGivenColumns(@PathVariable int size, @RequestParam String columns) {
         //tworzy listę kolumn podzielając ciąg znaków przecinkiem oraz ignorując wszystkie spacje
-        List<String> columnList = List.of(columns.split("\\s*,\\s*"));
+        Pattern pattern = Pattern.compile("\\s*,\\s*");
+        List<String> columnList = Arrays.asList(pattern.split(columns));
         return dataProcessingService.convertToCSVWithGivenColumns(columnList, size);
         //
     }
