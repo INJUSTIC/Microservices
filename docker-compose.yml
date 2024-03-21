@@ -1,14 +1,23 @@
 version: '3'
 services:
   data-generation:
-    build: ./data-generation
+    build:
+      context: .
+      args:
+        serviceName: data-generation
     ports:
       - "8080:8080"
   data-processing:
-    build: ./data-processing
+    build:
+      context: .
+      args:
+        serviceName: data-processing
     ports:
       - "8081:8081"
   collecting-metrics:
-    build: ./collecting-metrics
+    build:
+      context: .
+      args:
+        serviceName: collecting-metrics
     ports:
       - "8082:8082"
