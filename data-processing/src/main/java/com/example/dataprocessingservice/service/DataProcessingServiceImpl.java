@@ -2,23 +2,15 @@ package com.example.dataprocessingservice.service;
 
 import com.example.dataprocessingservice.model.PersonData;
 import com.example.dataprocessingservice.operationPerformer.OperationPerformer;
-import lombok.Value;
-import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
+import io.swagger.client.*;
+import io.swagger.client.api.DataGenerationControllerApi;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class DataProcessingServiceImpl implements DataProcessingService {
-
-    private final RestTemplate restTemplate;
-
-
-    public DataProcessingServiceImpl(RestTemplateBuilder restTemplateBuilder) {
-        restTemplate = restTemplateBuilder.rootUri("http://data-generation:8080/data-generation").build();
-    }
 
     @Override
     public String performOperations(List<String> operations, int size) {
@@ -93,13 +85,42 @@ public class DataProcessingServiceImpl implements DataProcessingService {
 
     @Override
     public List<PersonData> getPersonDataListFromFirstService(int size) {
-        String url = "/generate/json/" + size;
+        DataGenerationControllerApi apiInstance = new DataGenerationControllerApi();
+        try {
+            // Call the generateJson method to retrieve data from the Data Generation Service
+            List<io.swagger.client.model.PersonData> result = apiInstance.generateJson(size);
 
-        PersonData[] personDataArray = restTemplate.getForObject(url, PersonData[].class);
+            // Convert the List of generated PersonData to your Data Processing Service's model
 
-        //Jak nie dostaliśmy żadnych danych, zwrócamy null
-        if (personDataArray == null) return null;
-
-        return Arrays.asList(personDataArray);
+            return getPersonData(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling DataGenerationControllerApi#generateJson");
+            e.printStackTrace();
+            // Handle exception appropriately
+            return null;
+        }
     }
+
+    private static List<PersonData> getPersonData(List<io.swagger.client.model.PersonData> result) {
+        List<PersonData> processedResult = new ArrayList<>();
+        for (io.swagger.client.model.PersonData data : result) {
+            // Convert each item from the generated model to your Data Processing Service's model
+            PersonData processedData = new PersonData();
+            // Set properties of processedData based on the corresponding properties in data
+            processedData.setName(data.getName());
+            processedData.setKey(data.getKey());
+            processedData.setFullName(data.getFullName());
+            processedData.setLocation_id(data.getLocationId());
+            processedData.setIata_airport_code(data.getIataAirportCode());
+            processedData.setType(data.getType());
+            processedData.setCoreCountry(data.isCoreCountry());
+            processedData.setDistanceInKm(data.getDistanceInKm());
+            processedData.setCountryData(new com.example.dataprocessingservice.model.CountryData(data.getCountryData().getCountry(), data.getCountryData().isInEurope(), data.getCountryData().getCountryCode(), data.getCountryData().getMinLatitude(), data.getCountryData().getMaxLatitude(), data.getCountryData().getMinLongitude(), data.getCountryData().getMaxLongitude()));
+            processedData.setGeoPosition(new com.example.dataprocessingservice.model.GeoPosition(data.getGeoPosition().getLatitude(), data.getGeoPosition().getLongitude()));
+            // Map other properties as needed
+            processedResult.add(processedData);
+        }
+        return processedResult;
+    }
+
 }
