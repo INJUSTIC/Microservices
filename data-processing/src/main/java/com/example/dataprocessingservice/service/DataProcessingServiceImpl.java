@@ -1,5 +1,7 @@
 package com.example.dataprocessingservice.service;
 
+import com.example.client.ApiException;
+import com.example.client.api.DataGenerationControllerApi;
 import com.example.dataprocessingservice.model.PersonData;
 import com.example.dataprocessingservice.operationPerformer.OperationPerformer;
 import org.springframework.stereotype.Service;
@@ -84,15 +86,18 @@ public class DataProcessingServiceImpl implements DataProcessingService {
 
     @Override
     public List<PersonData> getPersonDataListFromFirstService(int size) {
-        /*DataGenerationControllerApi controllerApi = new DataGenerationControllerApiController(null);
-        List<com.gain.java.knowledge.api.model.PersonData> personDataList = controllerApi.generateJson(size).getBody();
-        return getPersonData(personDataList);*/
-        return null;
+        DataGenerationControllerApi dataGenerationControllerApi = new DataGenerationControllerApi();
+        try {
+            List<com.example.client.model.PersonData> personDataList = dataGenerationControllerApi.generateJson(size);
+            return getPersonData(personDataList);
+        } catch (ApiException e) {
+            throw new RuntimeException(e);
+        }
     }
 
-    /*private static List<PersonData> getPersonData(List<com.gain.java.knowledge.api.model.PersonData> result) {
+    private static List<PersonData> getPersonData(List<com.example.client.model.PersonData> result) {
         List<PersonData> processedResult = new ArrayList<>();
-        for (com.gain.java.knowledge.api.model.PersonData data : result) {
+        for (com.example.client.model.PersonData data : result) {
             // Convert each item from the generated model to your Data Processing Service's model
             PersonData processedData = new PersonData();
             // Set properties of processedData based on the corresponding properties in data
@@ -110,6 +115,6 @@ public class DataProcessingServiceImpl implements DataProcessingService {
             processedResult.add(processedData);
         }
         return processedResult;
-    }*/
+    }
 
 }

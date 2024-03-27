@@ -27,6 +27,7 @@
 
                         <configuration>
                             <inputSpec>./src/data-generation-api-docs.yaml</inputSpec>
+                            <generateTests>false</generateTests>
                             <generatorName>java</generatorName> <!-- Specify the generator name for Java client -->
                             <apiPackage>com.example.client.api</apiPackage> <!-- Package for generated API interfaces -->
                             <modelPackage>com.example.client.model</modelPackage> <!-- Package for generated models -->

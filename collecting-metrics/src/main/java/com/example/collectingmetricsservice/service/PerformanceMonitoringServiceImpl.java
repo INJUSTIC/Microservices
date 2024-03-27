@@ -3,12 +3,12 @@ package com.example.collectingmetricsservice.service;
 import io.micrometer.core.instrument.Gauge;
 import io.micrometer.core.instrument.MeterRegistry;
 import io.micrometer.core.instrument.simple.SimpleMeterRegistry;
-import io.swagger.client.ApiException;
+/*import io.swagger.client.ApiException;
 import io.swagger.client.DataGenerationApiClient;
 import io.swagger.client.DataProcessingApiClient;
 import io.swagger.client.api.DataGenerationControllerApi;
 //import io.swagger.client.api.DataProcessingControllerApi;
-import io.swagger.client.api.DataProcessingControllerApi;
+import io.swagger.client.api.DataProcessingControllerApi;*/
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -25,8 +25,8 @@ import java.util.concurrent.TimeUnit;
 @Service
 public class PerformanceMonitoringServiceImpl implements PerformanceMonitoringService{
 
-    private final DataGenerationControllerApi dataGenerationApi = new DataGenerationControllerApi(new DataGenerationApiClient());
-    private final DataProcessingControllerApi dataProcessingApi = new DataProcessingControllerApi(new DataProcessingApiClient());
+   /* private final DataGenerationControllerApi dataGenerationApi = new DataGenerationControllerApi(new DataGenerationApiClient());
+    private final DataProcessingControllerApi dataProcessingApi = new DataProcessingControllerApi(new DataProcessingApiClient());*/
     private final MeterRegistry meterRegistry;
     private final Map<Long, Double> usedMemoryByTime;
     //private final Map<Long, Double> usedCPUByTime;
@@ -47,7 +47,7 @@ public class PerformanceMonitoringServiceImpl implements PerformanceMonitoringSe
 
     @Override
     public String monitorPerformance() {
-        //Usuwamy stare dane
+        /*//Usuwamy stare dane
         finalReport = new StringBuilder();
         //monitorowanie pamięci i tworzenie raportu dla size = 1000, 10 000 oraz 100 000 obiektów JSON
         finalReport.append("Performance report<br>");
@@ -61,10 +61,11 @@ public class PerformanceMonitoringServiceImpl implements PerformanceMonitoringSe
             monitorForPerformOperations(size);
         }
 
-        return finalReport.toString();
+        return finalReport.toString();*/
+        return null;
     }
 
-    private void monitorForGenerateJson(int size) {
+   /* private void monitorForGenerateJson(int size) {
         finalReport.append("JSON generation endpoint <br><br>");
         try {
             startMonitoring();
@@ -131,7 +132,7 @@ public class PerformanceMonitoringServiceImpl implements PerformanceMonitoringSe
                 TimeUnit.MILLISECONDS
         );
         startTime = System.currentTimeMillis();
-    }
+    }*/
 
     //skończenie monitorowania zasobów
     private void stopMonitoring() {
