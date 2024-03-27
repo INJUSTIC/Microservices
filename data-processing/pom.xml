@@ -14,6 +14,56 @@
     <build>
         <plugins>
             <plugin>
+                <groupId>org.openapitools</groupId>
+                <artifactId>openapi-generator-maven-plugin</artifactId>
+                <version>5.1.0</version>
+                <executions>
+                    <execution>
+                        <id>openapi-codegen-java-sources</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+
+                        <configuration>
+                            <inputSpec>./src/data-generation-api-docs.yaml</inputSpec>
+                            <generatorName>spring</generatorName>
+                            <generateApiTests>false</generateApiTests>
+                            <modelPackage>com.gain.java.knowledge.api.model</modelPackage>
+                            <apiPackage>com.gain.java.knowledge.api</apiPackage>
+                            <output>${project.build.directory}</output>
+                            <generateSupportingFiles>true</generateSupportingFiles>
+                            <configOptions>
+                                <interfaceOnly>false</interfaceOnly>
+                                <sourceFolder>generated-sources</sourceFolder>
+                                <dateLibrary>java8</dateLibrary>
+                                <returnResponse>true</returnResponse>
+                                <library>spring-boot</library>
+                                <useTags>true</useTags>
+                                <hideGenerationTimestamp>true</hideGenerationTimestamp>
+                                <useSwaggerAnnotations>false</useSwaggerAnnotations>
+                                <serializableModel>true</serializableModel>
+                            </configOptions>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>3.2.3</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <mainClass>com.example.dataprocessingservice.DataProcessingServiceApplication</mainClass> <!-- Specify your main class here -->
+                </configuration>
+            </plugin>
+            <!--<plugin>
                 <groupId>io.swagger.codegen.v3</groupId>
                 <artifactId>swagger-codegen-maven-plugin</artifactId>
                 <dependencies>
@@ -44,7 +94,7 @@
                         </configuration>
                     </execution>
                 </executions>
-            </plugin>
+            </plugin>-->
             <!--<plugin>
                 <groupId>io.swagger</groupId>
                 <artifactId>swagger-codegen-maven-plugin</artifactId>

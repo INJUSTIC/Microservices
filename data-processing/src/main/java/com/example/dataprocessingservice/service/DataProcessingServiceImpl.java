@@ -2,7 +2,10 @@ package com.example.dataprocessingservice.service;
 
 import com.example.dataprocessingservice.model.PersonData;
 import com.example.dataprocessingservice.operationPerformer.OperationPerformer;
+import com.gain.java.knowledge.api.DataGenerationControllerApiController;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.handler.DispatcherServletWebRequest;
+import com.gain.java.knowledge.api.DataGenerationControllerApi;
 
 
 import java.util.ArrayList;
@@ -84,24 +87,12 @@ public class DataProcessingServiceImpl implements DataProcessingService {
 
     @Override
     public List<PersonData> getPersonDataListFromFirstService(int size) {
-        /*DataGenerationControllerApi apiInstance = new DataGenerationControllerApi();
-        try {
-            // Call the generateJson method to retrieve data from the Data Generation Service
-            List<io.swagger.client.model.PersonData> result = apiInstance.generateJson(size);
-
-            // Convert the List of generated PersonData to your Data Processing Service's model
-
-            return getPersonData(result);
-        } catch (ApiException e) {
-            System.err.println("Exception when calling DataGenerationControllerApi#generateJson");
-            e.printStackTrace();
-            // Handle exception appropriately
-            return null;
-        }*/
+        DataGenerationControllerApi controllerApi = new DataGenerationControllerApiController(null);
+        List<PersonData> personDataList = controllerApi.generateJson(size).getBody();
         return null;
     }
 
-/*    private static List<PersonData> getPersonData(List<io.swagger.client.model.PersonData> result) {
+    private static List<PersonData> getPersonData(List<io.swagger.client.model.PersonData> result) {
         List<PersonData> processedResult = new ArrayList<>();
         for (io.swagger.client.model.PersonData data : result) {
             // Convert each item from the generated model to your Data Processing Service's model
@@ -121,6 +112,6 @@ public class DataProcessingServiceImpl implements DataProcessingService {
             processedResult.add(processedData);
         }
         return processedResult;
-    }*/
+    }
 
 }
