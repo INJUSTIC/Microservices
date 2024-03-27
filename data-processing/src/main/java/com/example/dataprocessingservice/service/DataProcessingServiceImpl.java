@@ -3,8 +3,7 @@ package com.example.dataprocessingservice.service;
 import com.example.dataprocessingservice.model.PersonData;
 import com.example.dataprocessingservice.operationPerformer.OperationPerformer;
 import org.springframework.stereotype.Service;
-import io.swagger.client.*;
-import io.swagger.client.api.DataGenerationControllerApi;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -85,7 +84,7 @@ public class DataProcessingServiceImpl implements DataProcessingService {
 
     @Override
     public List<PersonData> getPersonDataListFromFirstService(int size) {
-        DataGenerationControllerApi apiInstance = new DataGenerationControllerApi();
+        /*DataGenerationControllerApi apiInstance = new DataGenerationControllerApi();
         try {
             // Call the generateJson method to retrieve data from the Data Generation Service
             List<io.swagger.client.model.PersonData> result = apiInstance.generateJson(size);
@@ -98,10 +97,11 @@ public class DataProcessingServiceImpl implements DataProcessingService {
             e.printStackTrace();
             // Handle exception appropriately
             return null;
-        }
+        }*/
+        return null;
     }
 
-    private static List<PersonData> getPersonData(List<io.swagger.client.model.PersonData> result) {
+/*    private static List<PersonData> getPersonData(List<io.swagger.client.model.PersonData> result) {
         List<PersonData> processedResult = new ArrayList<>();
         for (io.swagger.client.model.PersonData data : result) {
             // Convert each item from the generated model to your Data Processing Service's model
@@ -121,6 +121,6 @@ public class DataProcessingServiceImpl implements DataProcessingService {
             processedResult.add(processedData);
         }
         return processedResult;
-    }
+    }*/
 
 }

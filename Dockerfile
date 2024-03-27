@@ -1,5 +1,15 @@
+
+
+
 FROM maven:3.9.3-eclipse-temurin-17-alpine@sha256:1cbc71cb8e2f594338f4b4cbca897b9f9ed6183e361489f1f7db770d57efe839 AS builder
 ARG serviceName
+
+WORKDIR /build
+# Copy the Swagger Codegen generated client API project files
+COPY swagger-generated-client-api /build/swagger-generated-client-api
+# Build the client API
+WORKDIR /build/swagger-generated-client-api
+RUN mvn package -DskipTests
 
 WORKDIR /build
 COPY pom.xml app/
