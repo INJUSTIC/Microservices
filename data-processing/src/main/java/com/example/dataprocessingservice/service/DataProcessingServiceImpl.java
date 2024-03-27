@@ -2,10 +2,7 @@ package com.example.dataprocessingservice.service;
 
 import com.example.dataprocessingservice.model.PersonData;
 import com.example.dataprocessingservice.operationPerformer.OperationPerformer;
-import com.gain.java.knowledge.api.DataGenerationControllerApiController;
 import org.springframework.stereotype.Service;
-import org.springframework.web.servlet.handler.DispatcherServletWebRequest;
-import com.gain.java.knowledge.api.DataGenerationControllerApi;
 
 
 import java.util.ArrayList;
@@ -87,14 +84,15 @@ public class DataProcessingServiceImpl implements DataProcessingService {
 
     @Override
     public List<PersonData> getPersonDataListFromFirstService(int size) {
-        DataGenerationControllerApi controllerApi = new DataGenerationControllerApiController(null);
-        List<PersonData> personDataList = controllerApi.generateJson(size).getBody();
+        /*DataGenerationControllerApi controllerApi = new DataGenerationControllerApiController(null);
+        List<com.gain.java.knowledge.api.model.PersonData> personDataList = controllerApi.generateJson(size).getBody();
+        return getPersonData(personDataList);*/
         return null;
     }
 
-    private static List<PersonData> getPersonData(List<io.swagger.client.model.PersonData> result) {
+    /*private static List<PersonData> getPersonData(List<com.gain.java.knowledge.api.model.PersonData> result) {
         List<PersonData> processedResult = new ArrayList<>();
-        for (io.swagger.client.model.PersonData data : result) {
+        for (com.gain.java.knowledge.api.model.PersonData data : result) {
             // Convert each item from the generated model to your Data Processing Service's model
             PersonData processedData = new PersonData();
             // Set properties of processedData based on the corresponding properties in data
@@ -104,14 +102,14 @@ public class DataProcessingServiceImpl implements DataProcessingService {
             processedData.setLocation_id(data.getLocationId());
             processedData.setIata_airport_code(data.getIataAirportCode());
             processedData.setType(data.getType());
-            processedData.setCoreCountry(data.isCoreCountry());
+            processedData.setCoreCountry(data.getCoreCountry());
             processedData.setDistanceInKm(data.getDistanceInKm());
-            processedData.setCountryData(new com.example.dataprocessingservice.model.CountryData(data.getCountryData().getCountry(), data.getCountryData().isInEurope(), data.getCountryData().getCountryCode(), data.getCountryData().getMinLatitude(), data.getCountryData().getMaxLatitude(), data.getCountryData().getMinLongitude(), data.getCountryData().getMaxLongitude()));
+            processedData.setCountryData(new com.example.dataprocessingservice.model.CountryData(data.getCountryData().getCountry(), data.getCountryData().getInEurope(), data.getCountryData().getCountryCode(), data.getCountryData().getMinLatitude(), data.getCountryData().getMaxLatitude(), data.getCountryData().getMinLongitude(), data.getCountryData().getMaxLongitude()));
             processedData.setGeoPosition(new com.example.dataprocessingservice.model.GeoPosition(data.getGeoPosition().getLatitude(), data.getGeoPosition().getLongitude()));
             // Map other properties as needed
             processedResult.add(processedData);
         }
         return processedResult;
-    }
+    }*/
 
 }
