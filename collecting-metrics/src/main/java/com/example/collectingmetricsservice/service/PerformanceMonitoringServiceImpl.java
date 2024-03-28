@@ -1,17 +1,12 @@
 package com.example.collectingmetricsservice.service;
 
+import data_generation.client.ApiClient;
+import data_generation.client.api.DataGenerationControllerApi;
+import data_processing.client.api.DataProcessingControllerApi;
 import io.micrometer.core.instrument.Gauge;
 import io.micrometer.core.instrument.MeterRegistry;
 import io.micrometer.core.instrument.simple.SimpleMeterRegistry;
-/*import io.swagger.client.ApiException;
-import io.swagger.client.DataGenerationApiClient;
-import io.swagger.client.DataProcessingApiClient;
-import io.swagger.client.api.DataGenerationControllerApi;
-//import io.swagger.client.api.DataProcessingControllerApi;
-import io.swagger.client.api.DataProcessingControllerApi;*/
-import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
 import java.lang.management.ManagementFactory;
 import java.lang.management.MemoryMXBean;
@@ -25,8 +20,8 @@ import java.util.concurrent.TimeUnit;
 @Service
 public class PerformanceMonitoringServiceImpl implements PerformanceMonitoringService{
 
-   /* private final DataGenerationControllerApi dataGenerationApi = new DataGenerationControllerApi(new DataGenerationApiClient());
-    private final DataProcessingControllerApi dataProcessingApi = new DataProcessingControllerApi(new DataProcessingApiClient());*/
+    private final DataGenerationControllerApi dataGenerationApi = new DataGenerationControllerApi(new ApiClient());
+    private final DataProcessingControllerApi dataProcessingApi = new DataProcessingControllerApi(new data_processing.client.ApiClient());
     private final MeterRegistry meterRegistry;
     private final Map<Long, Double> usedMemoryByTime;
     //private final Map<Long, Double> usedCPUByTime;
@@ -47,7 +42,7 @@ public class PerformanceMonitoringServiceImpl implements PerformanceMonitoringSe
 
     @Override
     public String monitorPerformance() {
-        /*//Usuwamy stare dane
+        //Usuwamy stare dane
         finalReport = new StringBuilder();
         //monitorowanie pamięci i tworzenie raportu dla size = 1000, 10 000 oraz 100 000 obiektów JSON
         finalReport.append("Performance report<br>");
@@ -61,18 +56,17 @@ public class PerformanceMonitoringServiceImpl implements PerformanceMonitoringSe
             monitorForPerformOperations(size);
         }
 
-        return finalReport.toString();*/
-        return null;
+        return finalReport.toString();
     }
 
-   /* private void monitorForGenerateJson(int size) {
+    private void monitorForGenerateJson(int size) {
         finalReport.append("JSON generation endpoint <br><br>");
         try {
             startMonitoring();
             dataGenerationApi.generateJson(size);
             stopMonitoring();
             finalReport.append(generatePerformanceReport());
-        } catch (ApiException e) {
+        } catch (data_generation.client.ApiException e) {
             throw new RuntimeException(e);
         }
     }
@@ -84,7 +78,7 @@ public class PerformanceMonitoringServiceImpl implements PerformanceMonitoringSe
             dataProcessingApi.convertToCSV(size);
             stopMonitoring();
             finalReport.append(generatePerformanceReport());
-        } catch (ApiException e) {
+        } catch (data_processing.client.ApiException e) {
             throw new RuntimeException(e);
         }
     }
@@ -96,7 +90,7 @@ public class PerformanceMonitoringServiceImpl implements PerformanceMonitoringSe
             dataProcessingApi.convertToCSVWithGivenColumns(size, "_type,key,name,latitude,longitude");
             stopMonitoring();
             finalReport.append(generatePerformanceReport());
-        } catch (ApiException e) {
+        } catch (data_processing.client.ApiException e) {
             throw new RuntimeException(e);
         }
     }
@@ -108,7 +102,7 @@ public class PerformanceMonitoringServiceImpl implements PerformanceMonitoringSe
             dataProcessingApi.performOperations(size, "latitude*longitude,distance-latitude,sqrt(distance),latitude^2");
             stopMonitoring();
             finalReport.append(generatePerformanceReport());
-        } catch (ApiException e) {
+        } catch (data_processing.client.ApiException e) {
             throw new RuntimeException(e);
         }
     }
@@ -132,7 +126,7 @@ public class PerformanceMonitoringServiceImpl implements PerformanceMonitoringSe
                 TimeUnit.MILLISECONDS
         );
         startTime = System.currentTimeMillis();
-    }*/
+    }
 
     //skończenie monitorowania zasobów
     private void stopMonitoring() {

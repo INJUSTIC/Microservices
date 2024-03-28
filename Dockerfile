@@ -9,7 +9,7 @@ WORKDIR /build/app/${serviceName}
 RUN mvn package -DskipTests
 
 # Remove in the future, when found the way to not generate the test files
-RUN rm -rf target/generated-sources/client/src/test
+#RUN rm -rf target/generated-sources/client/src/test
 
 FROM eclipse-temurin:17.0.6_10-jre-alpine@sha256:c26a727c4883eb73d32351be8bacb3e70f390c2c94f078dc493495ed93c60c2f
 ARG serviceName

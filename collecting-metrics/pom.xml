@@ -30,4 +30,68 @@
         </dependency>
     </dependencies>
 
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.openapitools</groupId>
+                <artifactId>openapi-generator-maven-plugin</artifactId>
+                <version>5.1.0</version>
+                <executions>
+                    <execution>
+                        <id>openapi-codegen-java-client-data-generation</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+
+                        <configuration>
+                            <inputSpec>./src/data-generation-api-docs.yaml</inputSpec>
+                            <generatorName>java</generatorName> <!-- Specify the generator name for Java client -->
+                            <apiPackage>data-generation.client.api</apiPackage> <!-- Package for generated API interfaces -->
+                            <modelPackage>data-generation.client.model</modelPackage> <!-- Package for generated models -->
+                            <output>${project.build.directory}/generated-sources/data-generation-client</output> <!-- Output directory -->
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.openapitools</groupId>
+                <artifactId>openapi-generator-maven-plugin</artifactId>
+                <version>5.1.0</version>
+                <executions>
+                    <execution>
+                        <id>openapi-codegen-java-client-data-processing</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+
+                        <configuration>
+                            <inputSpec>./src/data-processing-api-docs.yaml</inputSpec>
+                            <generatorName>java</generatorName> <!-- Specify the generator name for Java client -->
+                            <apiPackage>data-processing.client.api</apiPackage> <!-- Package for generated API interfaces -->
+                            <modelPackage>data-processing.client.model</modelPackage> <!-- Package for generated models -->
+                            <output>${project.build.directory}/generated-sources/data-processing-client</output> <!-- Output directory -->
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>3.2.3</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <mainClass>com.example.collectingmetricsservice.CollectingMetricsServiceApplication</mainClass> <!-- Specify your main class here -->
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
 </project>
