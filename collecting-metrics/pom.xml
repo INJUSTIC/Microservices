@@ -45,7 +45,7 @@
                         </goals>
 
                         <configuration>
-                            <inputSpec>./src/data-generation-api-docs.yaml</inputSpec>
+                            <inputSpec>src/data-generation-api-docs.yaml</inputSpec>
                             <generatorName>java</generatorName> <!-- Specify the generator name for Java client -->
                             <apiPackage>data-generation.client.api</apiPackage> <!-- Package for generated API interfaces -->
                             <modelPackage>data-generation.client.model</modelPackage> <!-- Package for generated models -->
@@ -67,7 +67,7 @@
                         </goals>
 
                         <configuration>
-                            <inputSpec>./src/data-processing-api-docs.yaml</inputSpec>
+                            <inputSpec>src/data-processing-api-docs.yaml</inputSpec>
                             <generatorName>java</generatorName> <!-- Specify the generator name for Java client -->
                             <apiPackage>data-processing.client.api</apiPackage> <!-- Package for generated API interfaces -->
                             <modelPackage>data-processing.client.model</modelPackage> <!-- Package for generated models -->
