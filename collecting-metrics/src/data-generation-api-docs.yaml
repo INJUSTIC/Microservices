@@ -1,0 +1,94 @@
+openapi: 3.0.1
+info:
+  title: Data Generation Service
+  description: This service generates data
+  version: "1.0"
+servers:
+- url: http://data-generation:8080/data-generation
+  description: Server url for docker
+paths:
+  /generate/json/{size}:
+    get:
+      tags:
+      - data-generation-controller
+      summary: Generate json
+      description: Generates x=size json objects with random data
+      operationId: generateJson
+      parameters:
+      - name: size
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int32
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PersonData'
+components:
+  schemas:
+    CountryData:
+      type: object
+      properties:
+        country:
+          type: string
+        inEurope:
+          type: boolean
+        countryCode:
+          type: string
+        minLatitude:
+          type: number
+          format: double
+        maxLatitude:
+          type: number
+          format: double
+        minLongitude:
+          type: number
+          format: double
+        maxLongitude:
+          type: number
+          format: double
+    GeoPosition:
+      type: object
+      properties:
+        latitude:
+          type: number
+          format: double
+        longitude:
+          type: number
+          format: double
+    PersonData:
+      type: object
+      properties:
+        get_type:
+          type: string
+        get_id:
+          type: integer
+          format: int64
+        key:
+          type: string
+        name:
+          type: string
+        fullName:
+          type: string
+        location_id:
+          type: integer
+          format: int64
+        iata_airport_code:
+          type: string
+        type:
+          type: string
+        countryData:
+          $ref: '#/components/schemas/CountryData'
+        geoPosition:
+          $ref: '#/components/schemas/GeoPosition'
+        coreCountry:
+          type: boolean
+        distanceInKm:
+          type: integer
+          format: int32
