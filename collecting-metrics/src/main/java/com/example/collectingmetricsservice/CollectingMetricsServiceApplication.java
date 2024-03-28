@@ -11,7 +11,5 @@ public class CollectingMetricsServiceApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(CollectingMetricsServiceApplication.class, args);
-		////
 	}
-
 }

@@ -11,6 +11,49 @@
 
     <artifactId>data-processing</artifactId>
 
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.openapitools</groupId>
+                <artifactId>openapi-generator-maven-plugin</artifactId>
+                <version>5.1.0</version>
+                <executions>
+                    <execution>
+                        <id>openapi-codegen-java-client</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+
+                        <configuration>
+                            <inputSpec>/home/user/IdeaProjects/microservices2/data-processing/src/data-generation-api-docs.yaml</inputSpec>
+                            <generatorName>java</generatorName> <!-- Specify the generator name for Java client -->
+                            <apiPackage>com.example.client.api</apiPackage> <!-- Package for generated API interfaces -->
+                            <modelPackage>com.example.client.model</modelPackage> <!-- Package for generated models -->
+                            <output>${project.build.directory}/generated-sources/client</output> <!-- Output directory -->
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>3.2.3</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <mainClass>com.example.dataprocessingservice.DataProcessingServiceApplication</mainClass> <!-- Specify your main class here -->
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+
     <properties>
         <maven.compiler.source>21</maven.compiler.source>
         <maven.compiler.target>21</maven.compiler.target>
